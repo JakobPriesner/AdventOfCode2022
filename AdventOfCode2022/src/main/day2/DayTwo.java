@@ -2,18 +2,12 @@ package main.day2;
 
 import main.utils.FileHelper;
 
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class DayTwo {
-
-    private static String[] enemy = new String[]{"A", "B", "C"};
-    private static String[] self = new String[]{"X", "Y", "Z"};
-
     // A = Schere, B = Stein, C = Papier
     // X = Schere, Y = Stein, Z = Papier
 

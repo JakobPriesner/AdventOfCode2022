@@ -1,6 +1,5 @@
 package main.day1;
 
-import main.day4.DayFour;
 import main.utils.FileHelper;
 
 import java.io.*;
