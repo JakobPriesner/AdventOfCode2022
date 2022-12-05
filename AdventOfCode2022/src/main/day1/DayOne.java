@@ -1,44 +1,39 @@
 package main.day1;
 
+import main.day4.DayFour;
 import main.utils.FileHelper;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.Function;
 
 public class DayOne {
-    private final List<Integer> elveList;
-
-    public DayOne() {
-        this.elveList = new LinkedList<>(Collections.singletonList(0));
+    public static void main(String[] args) throws IOException {
+        System.out.println("Maximum snacks of one elve: " + getMaxValue());
+        System.out.println("Snacks of first three elves: " +getSumOfFirstThreeValues());
     }
 
-    public static void main(String[] args) {
-        DayOne dayOne = new DayOne();
-        InputStream fileAsStream = DayOne.class.getResourceAsStream("./input.txt");
-        FileHelper.loadFileWithCallbackForEachLine(fileAsStream, dayOne.processSingleLine());
-        System.out.println("Maximum snacks of one elve: " + dayOne.getMaxValue().orElse(-1));
-        System.out.println("Snacks of first three elves: " + dayOne.getSumOfFirstThreeValues());
+    private static int getMaxValue() throws IOException {
+        return getElveList()
+                .stream()
+                .max(Comparator.comparingInt(o -> o))
+                .orElse(-1);
     }
 
-    private Optional<Integer> getMaxValue(){
-        return this.elveList.stream().max(Comparator.comparingInt(o -> o));
+    private static int getSumOfFirstThreeValues() throws IOException {
+        return getElveList()
+                .stream()
+                .sorted(Comparator.comparingInt(o -> -o))
+                .limit(3)
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
-    private int getSumOfFirstThreeValues(){
-        return this.elveList.stream().sorted(Comparator.comparingInt(o -> -o)).limit(3).mapToInt(Integer::intValue).sum();
-    }
-
-    public Function<String, Void> processSingleLine(){
-        return s -> {
-            if (s.isEmpty()){
-                elveList.add(0);
-                return null;
-            }
-            final int indexOfLastItem = elveList.size()-1;
-            final int newAmount = elveList.get(indexOfLastItem) + Integer.parseInt(s);
-            elveList.set(indexOfLastItem, newAmount);
-            return null;
-        };
+    public static List<Integer> getElveList() throws IOException {
+        List<Integer> elfeList = new ArrayList<>(Collections.singletonList(0));
+        for (String s : FileHelper.getAllLines(Objects.requireNonNull(DayOne.class.getResource("./input.txt")).getPath())) {
+            if (s.isEmpty()) elfeList.add(0);
+            else elfeList.set(elfeList.size() - 1, elfeList.get(elfeList.size() - 1) + Integer.parseInt(s));
+        }
+        return elfeList;
     }
 }
